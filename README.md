@@ -38,3 +38,18 @@ Pruning removes selected parts of a trained model. **Depth pruning** removes ent
 ## Interview talking point
 
 I measured the original model before applying compression. Using the same evaluation setup for each variant lets me compare accuracy in percentage points. A separate serving benchmark will show whether those accuracy trade-offs buy measurable improvements in latency or throughput.
+
+## FE1 · Single-feature ablation
+
+**Status.** Planned. Results will be added after the experiment.
+
+**Question.** Does one input feature improve the student's ability to reproduce the teacher's decisions when the other inputs are available?
+
+Train a baseline student with all features and a second student with one feature removed. Keep the architecture, training settings, data split, and decision threshold fixed. Evaluate both on the same held-out examples against the same teacher labels.
+
+| Model | Missed teacher vetoes | Extra vetoes |
+| :--- | ---: | ---: |
+| All features | Pending | Pending |
+| One feature removed | Pending | Pending |
+
+Report counts and rates. Divide missed vetoes by teacher vetoes and extra vetoes by teacher allows. If both rates stay similar, the feature may add little under this setup. Overlapping features can still matter when removed together.
