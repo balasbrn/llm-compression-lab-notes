@@ -25,12 +25,24 @@ Pruning removes selected parts of a trained model. **Depth pruning** removes ent
 
 **What the lab tests.** Rerun ARC-Easy, PIQA, and WinoGrande after pruning and compare each score with its BF16 baseline. This measures the immediate accuracy change and gives a reference for evaluating how much accuracy distillation recovers.
 
+## Depth pruning results
+
+The depth-pruned checkpoint has 36 layers and 3.50B parameters, down from 3.97B (about 12% fewer parameters). Both runs used BF16, five examples per task, and batch size 32.
+
+| Benchmark | Original accuracy | Depth-pruned accuracy | Change |
+| :--- | ---: | ---: | ---: |
+| ARC-Easy | 81.36% | 67.13% | −14.23 pp |
+| PIQA | 77.15% | 69.48% | −7.67 pp |
+| WinoGrande | 67.17% | 60.14% | −7.03 pp |
+
+ARC-Easy showed the largest drop in this run. Changes are in percentage points and use the raw accuracy metric.
+
 ## Experiment roadmap
 
 | Stage | What I want to measure | Status |
 | :--- | :--- | :--- |
 | BF16 baseline | Reference accuracy on three tasks | Measured |
-| Pruning | Accuracy change after removing model capacity | Planned |
+| Pruning | Accuracy change after removing model capacity | Depth measured |
 | Distillation | Accuracy recovered through teacher supervision | Planned |
 | Quantization | Effect of lower precision on accuracy and memory | Planned |
 | Inference benchmarking | Latency and throughput under the same serving workload | Planned |
