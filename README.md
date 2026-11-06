@@ -25,24 +25,24 @@ Pruning removes selected parts of a trained model. **Depth pruning** removes ent
 
 **What the lab tests.** Rerun ARC-Easy, PIQA, and WinoGrande after pruning and compare each score with its BF16 baseline. This measures the immediate accuracy change and gives a reference for evaluating how much accuracy distillation recovers.
 
-## Depth pruning results
+## Pruning results
 
-The depth-pruned checkpoint has 36 layers and 3.50B parameters, down from 3.97B (about 12% fewer parameters). Both runs used BF16, five examples per task, and batch size 32.
+The depth-pruned checkpoint has 36 layers and 3.50B parameters, down from 3.97B (about 12% fewer parameters). The width-pruned checkpoint has 3.44B parameters (about 13% fewer than the original). All three runs used BF16, five examples per task, and batch size 32.
 
-| Benchmark | Original accuracy | Depth-pruned accuracy | Change |
+| Benchmark | Original | Depth-pruned (Δ) | Width-pruned (Δ) |
 | :--- | ---: | ---: | ---: |
-| ARC-Easy | 81.36% | 67.13% | −14.23 pp |
-| PIQA | 77.15% | 69.48% | −7.67 pp |
-| WinoGrande | 67.17% | 60.14% | −7.03 pp |
+| ARC-Easy | 81.36% | 67.13% (−14.23 pp) | 71.21% (−10.15 pp) |
+| PIQA | 77.15% | 69.48% (−7.67 pp) | 71.44% (−5.71 pp) |
+| WinoGrande | 67.17% | 60.14% (−7.03 pp) | 63.38% (−3.79 pp) |
 
-ARC-Easy showed the largest drop in this run. Changes are in percentage points and use the raw accuracy metric.
+The width-pruned checkpoint had fewer parameters and scored higher than the depth-pruned checkpoint on all three tasks. Changes use raw accuracy and are in percentage points relative to the original.
 
 ## Experiment roadmap
 
 | Stage | What I want to measure | Status |
 | :--- | :--- | :--- |
 | BF16 baseline | Reference accuracy on three tasks | Measured |
-| Pruning | Accuracy change after removing model capacity | Depth measured |
+| Pruning | Accuracy change after removing model capacity | Depth and width measured |
 | Distillation | Accuracy recovered through teacher supervision | Planned |
 | Quantization | Effect of lower precision on accuracy and memory | Planned |
 | Inference benchmarking | Latency and throughput under the same serving workload | Planned |
