@@ -37,13 +37,25 @@ The depth-pruned checkpoint has 36 layers and 3.50B parameters, down from 3.97B 
 
 The width-pruned checkpoint had fewer parameters and scored higher than the depth-pruned checkpoint on all three tasks. NAS scored within 0.17 percentage points of depth pruning on each task. Width pruning had the highest accuracy of the three pruned checkpoints on every benchmark. Changes use raw accuracy and are in percentage points relative to the original.
 
+## Distillation results
+
+After 40 iterations of logits distillation, the 3.44B width-pruned student improved on all three BF16 5-shot benchmarks.
+
+| Benchmark | Original | Before distillation | After distillation | Gain |
+| :--- | ---: | ---: | ---: | ---: |
+| ARC-Easy | 81.36% | 71.21% | 76.26% | +5.05 pp |
+| PIQA | 77.15% | 71.44% | 74.27% | +2.83 pp |
+| WinoGrande | 67.17% | 63.38% | 66.22% | +2.84 pp |
+
+Gains are in percentage points and use raw accuracy.
+
 ## Experiment roadmap
 
 | Stage | What I want to measure | Status |
 | :--- | :--- | :--- |
 | BF16 baseline | Reference accuracy on three tasks | Measured |
 | Pruning | Accuracy change after removing model capacity | Depth, width, and NAS measured |
-| Distillation | Accuracy recovered through teacher supervision | Planned |
+| Distillation | Accuracy recovered through teacher supervision | Measured |
 | Quantization | Effect of lower precision on accuracy and memory | Planned |
 | Inference benchmarking | Latency and throughput under the same serving workload | Planned |
 
