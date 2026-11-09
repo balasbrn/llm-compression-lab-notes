@@ -4,6 +4,17 @@
 
 My experiment notes from NVIDIA's *The Art of Compressing LLMs*. The first milestone is an accuracy baseline for the original Nemotron model.
 
+## Lab environment
+
+| Item | Observed value |
+| :--- | :--- |
+| GPU | 1 × NVIDIA H100 NVL |
+| GPU memory visible to the lab | 95,830 MiB (93.6 GiB) |
+| NVIDIA driver | 570.86.15 |
+| CUDA version reported by `nvidia-smi` | 13.0 |
+
+Hardware snapshot taken in the quantization session on November 9, 2026. The CUDA value comes from the driver display. Runtime and toolkit versions may differ.
+
 ## Baseline results
 
 ![5-shot baseline accuracy for ARC-Easy, PIQA, and WinoGrande](assets/baseline-accuracy.svg)
