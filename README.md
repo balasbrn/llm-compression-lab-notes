@@ -83,7 +83,16 @@ AIPerf measured aggregate output tokens per second with vLLM. Both runs used str
 | 30 | 3339.07 | 4221.79 | 1.26× |
 | 100 | 3313.80 | 3721.74 | 1.12× |
 
-FP8 delivered higher aggregate throughput at all four concurrencies. Both configurations reached their highest measured throughput at concurrency 30. Latency and request errors have yet to be compared.
+FP8 delivered higher aggregate throughput at all four concurrencies. Both configurations reached their highest measured throughput at concurrency 30. The CSV exports also reported the following p95 latencies, in milliseconds.
+
+| Concurrency | Request latency BF16 → FP8 | Time to first token BF16 → FP8 |
+| :--- | ---: | ---: |
+| 1 | 11,142.67 → 8,136.30 | 10,349.79 → 7,576.43 |
+| 10 | 1,196.18 → 926.12 | 120.81 → 79.06 |
+| 30 | 3,167.82 → 1,441.28 | 1,757.24 → 219.78 |
+| 100 | 14,595.84 → 14,397.14 | 11,076.77 → 11,079.44 |
+
+Concurrency 1 had only 11 BF16 and 14 FP8 requests, so a slow request can strongly affect p95. At concurrency 100, first-token p95 was essentially unchanged despite higher output throughput. The CSVs do not establish request error rates.
 
 ## Experiment roadmap
 
@@ -93,7 +102,7 @@ FP8 delivered higher aggregate throughput at all four concurrencies. Both config
 | Pruning | Accuracy change after removing model capacity | Depth, width, and NAS measured |
 | Distillation | Accuracy recovered through teacher supervision | Measured |
 | Quantization | Effect of lower precision on accuracy and memory | Accuracy measured |
-| Inference benchmarking | Latency and throughput under the same serving workload | Throughput measured |
+| Inference benchmarking | Latency and throughput under the same serving workload | Throughput and latency measured |
 
 ## Interview talking point
 
