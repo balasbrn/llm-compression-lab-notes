@@ -60,6 +60,18 @@ After 40 iterations of logits distillation, the 3.44B width-pruned student impro
 
 Gains are in percentage points and use raw accuracy.
 
+## FP8 quantization results
+
+The original Nemotron checkpoint was quantized to FP8 with CNN/DailyMail calibration and served through vLLM with an FP8 KV cache.
+
+| Benchmark | Original BF16 | Original FP8 | Change |
+| :--- | ---: | ---: | ---: |
+| ARC-Easy | 81.36% | 81.19% | −0.17 pp |
+| PIQA | 77.15% | 76.82% | −0.33 pp |
+| WinoGrande | 67.17% | 67.56% | +0.39 pp |
+
+These are raw 5-shot accuracy scores. The FP8 run used the vLLM completions API with batch size 16. The BF16 run used the Hugging Face backend with batch size 32. The scores were close across these setups. A matched serving benchmark is needed to measure a speedup.
+
 ## Experiment roadmap
 
 | Stage | What I want to measure | Status |
@@ -67,7 +79,7 @@ Gains are in percentage points and use raw accuracy.
 | BF16 baseline | Reference accuracy on three tasks | Measured |
 | Pruning | Accuracy change after removing model capacity | Depth, width, and NAS measured |
 | Distillation | Accuracy recovered through teacher supervision | Measured |
-| Quantization | Effect of lower precision on accuracy and memory | Planned |
+| Quantization | Effect of lower precision on accuracy and memory | Accuracy measured |
 | Inference benchmarking | Latency and throughput under the same serving workload | Planned |
 
 ## Interview talking point
