@@ -72,6 +72,19 @@ The original Nemotron checkpoint was quantized to FP8 with CNN/DailyMail calibra
 
 These are raw 5-shot accuracy scores. The FP8 run used the vLLM completions API with batch size 16. The BF16 run used the Hugging Face backend with batch size 32. The scores were close across these setups. A matched serving benchmark is needed to measure a speedup.
 
+## Serving throughput on H100
+
+AIPerf measured aggregate output tokens per second with vLLM. Both runs used streaming completions, 512-token synthetic inputs, a 256-token output target, and 30-second runs at each concurrency. The FP8 run used the original Nemotron quantized to FP8, with an FP8 KV cache.
+
+| Concurrency | BF16 tokens/s | FP8 tokens/s | FP8 / BF16 |
+| :--- | ---: | ---: | ---: |
+| 1 | 79.66 | 96.25 | 1.21× |
+| 10 | 1686.35 | 2091.72 | 1.24× |
+| 30 | 3339.07 | 4221.79 | 1.26× |
+| 100 | 3313.80 | 3721.74 | 1.12× |
+
+FP8 delivered higher aggregate throughput at all four concurrencies. Both configurations reached their highest measured throughput at concurrency 30. Latency and request errors have yet to be compared.
+
 ## Experiment roadmap
 
 | Stage | What I want to measure | Status |
@@ -80,7 +93,7 @@ These are raw 5-shot accuracy scores. The FP8 run used the vLLM completions API 
 | Pruning | Accuracy change after removing model capacity | Depth, width, and NAS measured |
 | Distillation | Accuracy recovered through teacher supervision | Measured |
 | Quantization | Effect of lower precision on accuracy and memory | Accuracy measured |
-| Inference benchmarking | Latency and throughput under the same serving workload | Planned |
+| Inference benchmarking | Latency and throughput under the same serving workload | Throughput measured |
 
 ## Interview talking point
 
