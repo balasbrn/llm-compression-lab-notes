@@ -4,6 +4,8 @@
 
 My experiment notes from NVIDIA's *The Art of Compressing LLMs*. The first milestone is an accuracy baseline for the original Nemotron model.
 
+![Five stages of the NVIDIA compression lab and Llama anatomy scores](assets/compression-workflow.svg)
+
 ## Completion
 
 **NVIDIA Deep Learning Institute Certificate of Competency**  
@@ -119,6 +121,19 @@ FP8 delivered higher aggregate throughput at all four concurrencies. Both config
 
 Concurrency 1 had only 11 BF16 and 14 FP8 requests, so a slow request can strongly affect p95. At concurrency 100, first-token p95 was essentially unchanged despite higher output throughput. The CSVs do not establish request error rates.
 
+## Applying this to my ML projects
+
+I’m building a reusable teacher–student pipeline for rule-based signals. ATR is the first research case. The design separates strategy inputs, teacher outputs, and the rule that converts a score into a decision, so I can train and evaluate a new student when the strategy changes.
+
+| In development | What I plan to measure |
+| :--- | :--- |
+| Reproduce the current student baseline | Per-example agreement, missed vetoes, and extra vetoes |
+| Compare hard labels with richer teacher scores | What changes when the student learns from scores instead of final decisions |
+| Rebuild a student for a second strategy | Whether the same pipeline works with a new strategy adapter and fresh held-out data |
+| Benchmark an exported student | Decision latency, memory, and failures under a fixed workload |
+
+The focus is teacher fidelity and deployment behavior. Strategy profitability is a separate evaluation.
+
 ## Experiment roadmap
 
 | Stage | What I want to measure | Status |
@@ -131,7 +146,7 @@ Concurrency 1 had only 11 BF16 and 14 FP8 requests, so a slow request can strong
 
 ## Interview talking point
 
-I measured the original model before applying compression. Using the same evaluation setup for each variant lets me compare accuracy in percentage points. A separate serving benchmark will show whether those accuracy trade-offs buy measurable improvements in latency or throughput.
+I measured the original model before applying compression. Using the same evaluation setup for each variant lets me compare accuracy in percentage points. I measured serving performance separately and reported timeouts alongside speedups.
 
 ## FE1 · Single-feature ablation
 
