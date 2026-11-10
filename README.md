@@ -4,6 +4,31 @@
 
 My experiment notes from NVIDIA's *The Art of Compressing LLMs*. The first milestone is an accuracy baseline for the original Nemotron model.
 
+## Completion
+
+**NVIDIA Deep Learning Institute Certificate of Competency**  
+*The Art of Compressing LLMs: Pruning, Distillation, and Quantization Demystified*  
+Issued November 10, 2026 · **Final assessment: 100/100**  
+[Verify the NVIDIA certificate](https://learn.nvidia.com/certificates?id=5GdXy5BkQyKAFXkroo0lyw)
+
+## Final assessment · Llama 3.2 3B Instruct
+
+| Stage | Measured result | Grade |
+| :--- | :--- | ---: |
+| Baseline | 59.26% on 5-shot MMLU Anatomy | 20/20 |
+| NAS pruning | 2,583,579,648 parameters, about 20% fewer than baseline, and 49.63% anatomy accuracy | 30/30 |
+| Distillation | 48.89% anatomy accuracy, above the 47.4% assessment target | 20/20 |
+| Serving benchmark | All four reported throughput and latency speedups exceeded the 1.10× grading threshold | 30/30 |
+
+| Concurrency | Throughput speedup | Latency speedup |
+| ---: | ---: | ---: |
+| 1 | 1.59× | 1.60× |
+| 10 | 1.70× | 1.71× |
+| 30 | 1.70× | 1.73× |
+| 100 | 1.90× | 1.82× |
+
+The Llama student scored 0.74 percentage points lower after distillation than immediately after pruning. The compressed concurrency-100 benchmark logged timeouts and reported a measured duration of 6.68 seconds against a configured 30 seconds. Its speedups are provisional. The Nemotron lab results below are a separate experiment.
+
 ## Lab environment
 
 | Item | Observed value |
